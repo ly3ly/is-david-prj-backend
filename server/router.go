@@ -37,6 +37,9 @@ func NewRouter() *gin.Engine {
 			auth.DELETE("user/logout", api.UserLogout)
 			auth.PUT("user/subjects", api.UserUpdateSubjects)
 			auth.GET("user/subjects", api.UserGetSubjects)
+
+			auth.PUT("user/records",api.UserUpdateRecords)
+			auth.GET("user/records",api.UserGetRecords)
 		}
 	}
 	return r

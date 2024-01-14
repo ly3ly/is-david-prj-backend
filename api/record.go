@@ -5,8 +5,8 @@ import (
 	"singo/service"
 )
 
-func UserUpdateSubjects(c *gin.Context) {
-	var service service.UserRecommendServiceV1
+func UserUpdateRecords(c *gin.Context) {
+	var service service.UserUpdateRecordService
 	if err := c.ShouldBind(&service); err == nil {
 		res := service.Operate()
 		c.JSON(200, res)
@@ -15,8 +15,8 @@ func UserUpdateSubjects(c *gin.Context) {
 	}
 }
 
-func UserGetSubjects(c *gin.Context) {
-	var service service.UserGetSubjectsService
+func UserGetRecords(c *gin.Context) {
+	var service service.UserGetRecordsService
 	if err := c.ShouldBind(&service); err == nil {
 		res := service.Operate()
 		c.JSON(200, res)
@@ -24,3 +24,4 @@ func UserGetSubjects(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
