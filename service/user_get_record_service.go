@@ -19,9 +19,22 @@ func (receiver UserGetRecordsService) Operate() *serializer.Response {
 		}
 	}
 
+	rntRecords := []model.VisitRecord{}
+
+	for i := 0; i < len(records); i++ {
+		item := records[i]
+		if len(item.SerialUUID) == 0 {
+			continue
+		}
+		if item.ExplainTime_t > item.VisitTime_t {
+			continue
+		}
+		rntRecords = append(rntRecords, item)
+	}
+
 	return &serializer.Response{
 		Code: 0,
-		Data: records,
+		Data: rntRecords,
 		Msg:  "get record success!",
 	}
 

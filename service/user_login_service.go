@@ -3,6 +3,8 @@ package service
 import (
 	"singo/model"
 	"singo/serializer"
+	"singo/util"
+	"singo/util/e"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -35,7 +37,15 @@ func (service *UserLoginService) Login(c *gin.Context) serializer.Response {
 	}
 
 	// 设置session
-	service.setSession(c, user)
+	//service.setSession(c, user)
+	token, err := util.GenerateToken(service.UserName, service.Password, 1)
+	if err != nil {
+		code := e.ERROR_AUTH_TOKEN
+		return serializer.Response{
+			Code: code,
+			Msg:  e.GetMsg(code),
+		}
+	}
 
-	return serializer.BuildUserResponse(user)
+	return serializer.BuildUserResponse(user, token)
 }

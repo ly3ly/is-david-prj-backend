@@ -1,14 +1,10 @@
 package api
 
 import (
-	"encoding/json"
-	"fmt"
-	"singo/conf"
 	"singo/model"
 	"singo/serializer"
 
 	"github.com/gin-gonic/gin"
-	validator "github.com/go-playground/validator/v10"
 )
 
 // Ping 状态检查页面
@@ -31,19 +27,24 @@ func CurrentUser(c *gin.Context) *model.User {
 
 // ErrorResponse 返回错误消息
 func ErrorResponse(err error) serializer.Response {
-	if ve, ok := err.(validator.ValidationErrors); ok {
-		for _, e := range ve {
-			field := conf.T(fmt.Sprintf("Field.%s", e.Field()))
-			tag := conf.T(fmt.Sprintf("Tag.Valid.%s", e.Tag()))
-			return serializer.ParamErr(
-				fmt.Sprintf("%s%s", field, tag),
-				err,
-			)
-		}
-	}
-	if _, ok := err.(*json.UnmarshalTypeError); ok {
-		return serializer.ParamErr("JSON类型不匹配", err)
-	}
+	//if ve, ok := err.(validator.ValidationErrors); ok {
+	//	for _, e := range ve {
+	//		field := conf.T(fmt.Sprintf("Field.%s", e.Field()))
+	//		tag := conf.T(fmt.Sprintf("Tag.Valid.%s", e.Tag()))
+	//		return serializer.ParamErr(
+	//			fmt.Sprintf("%s%s", field, tag),
+	//			err,
+	//		)
+	//	}
+	//}
+	//if _, ok := err.(*json.UnmarshalTypeError); ok {
+	//	return serializer.ParamErr("JSON类型不匹配", err)
+	//}
 
-	return serializer.ParamErr("参数错误", err)
+	//return serializer.ParamErr("参数错误", err)
+	return serializer.Response{
+		Code: 40001,
+		Data: err,
+		Msg:  "error",
+	}
 }
