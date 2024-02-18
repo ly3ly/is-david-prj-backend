@@ -43,7 +43,7 @@ func ErrorResponse(err error) serializer.Response {
 
 	//return serializer.ParamErr("参数错误", err)
 	return serializer.Response{
-		Code: 40001,
+		Code: 40010,
 		Data: err,
 		Msg:  "error",
 	}
