@@ -44,6 +44,7 @@ func NewRouter() *gin.Engine {
 			auth.GET("user/subjects", api.UserGetSubjects)
 
 			auth.PUT("user/records", api.UserUpdateRecords)
+			auth.POST("user/inactive", api.UserInActiveService)
 		}
 
 	}

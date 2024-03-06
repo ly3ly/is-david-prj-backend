@@ -25,3 +25,12 @@ func UserGetRecords(c *gin.Context) {
 	}
 }
 
+func UserInActiveService(c *gin.Context) {
+	var service service.UserActiveService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.Handler()
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}

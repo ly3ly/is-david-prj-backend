@@ -29,12 +29,30 @@ func (receiver UserGetRecordsService) Operate() *serializer.Response {
 		if item.ExplainTime_t > item.VisitTime_t {
 			continue
 		}
+		if item.ExplainOpenTime != 0 && item.ExplainTime_t == 0 {
+			continue
+		}
+		if item.VisitTime_t != 0 && item.LeaveTime == 0 {
+			continue
+		}
+		if item.PageInActiveTime_t > item.VisitTime_t {
+			continue
+		}
 		rntRecords = append(rntRecords, item)
+	}
+
+	//得到active的time
+	var rnt []model.VisitRecord
+	for i := 0; i < len(rntRecords); i++ {
+		tmp := rntRecords[i]
+		tmp.PageInActiveTime_t = tmp.VisitTime_t - tmp.PageInActiveTime_t
+		tmp.ExplainInActiveTime_t = tmp.ExplainTime_t - tmp.ExplainInActiveTime_t
+		rnt = append(rnt, tmp)
 	}
 
 	return &serializer.Response{
 		Code: 0,
-		Data: rntRecords,
+		Data: rnt,
 		Msg:  "get record success!",
 	}
 

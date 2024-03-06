@@ -86,12 +86,14 @@ func (receiver UserUpdateRecordService) Operate() *serializer.Response {
 	}
 
 	if receiver.TimeType == 3 {
-		record.ExplainOpenTime = time.Now().Unix()
+		if record.ExplainOpenTime == 0 {
+			record.ExplainOpenTime = time.Now().Unix()
+		}
 	}
 
 	if receiver.TimeType == 4 {
 		record.ExplainCloseTime = time.Now().Unix()
-		record.ExplainTime_t = record.ExplainCloseTime - record.ExplainOpenTime
+		record.ExplainTime_t = record.ExplainTime_t + record.ExplainCloseTime - record.ExplainOpenTime
 	}
 
 	if err := model.DB.Save(&record).Error; err != nil {
