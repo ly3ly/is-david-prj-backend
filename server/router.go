@@ -25,7 +25,7 @@ func NewRouter() *gin.Engine {
 		v1.POST("ping", api.Ping)
 
 		// 用户登录
-		v1.POST("user/register", api.UserRegister)
+		//v1.POST("user/register", api.UserRegister)
 
 		// 用户登录
 		v1.POST("user/login", api.UserLogin)
@@ -38,13 +38,15 @@ func NewRouter() *gin.Engine {
 		auth.Use(middleware.JWT())
 		{
 			// User Routing
-			auth.GET("user/me", api.UserMe)
+			//auth.GET("user/me", api.UserMe)
 			auth.DELETE("user/logout", api.UserLogout)
-			auth.PUT("user/subjects", api.UserUpdateSubjects)
-			auth.GET("user/subjects", api.UserGetSubjects)
+			//auth.PUT("user/subjects", api.UserUpdateSubjects)
+			//auth.GET("user/subjects", api.UserGetSubjects)
 
 			auth.PUT("user/records", api.UserUpdateRecords)
 			auth.POST("user/inactive", api.UserInActiveService)
+			auth.POST("user/activity", api.UserActiveReport)
+			auth.POST("user/page", api.UserPageReport)
 		}
 
 	}

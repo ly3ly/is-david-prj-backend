@@ -74,7 +74,7 @@ func echoHandler(w http.ResponseWriter, r *http.Request) {
 			//log.Println("Read error:", err)
 			log.Println("kill sid: ", serialID)
 			service := service2.UserLeaveService{SerialUUID: serialID}
-			service.Operate()
+			service.OperateV1()
 			return
 		}
 		serialID = string(message)
